@@ -8,9 +8,6 @@ const getInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-getInteger(0, 10);
-
-
 // Функция для проверки максимальной длины строки
 
 const getMaxStringWidth = (string, maxWidth) => {

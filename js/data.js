@@ -64,8 +64,6 @@ const createCommentsArray = () => {
     comments.push(createComments());
   }
 
-
-
   return comments;
 };
 
@@ -86,7 +84,5 @@ const createPhotos = () => {
 
   return photos;
 };
-
-createPhotos();
 
 export {createPhotos};
