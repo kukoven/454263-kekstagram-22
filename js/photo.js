@@ -1,29 +1,26 @@
-import {createPhotos} from './data.js';
-
-const photos = createPhotos();
-const randomPhotoTemplate = document.querySelector('#picture')
+const photoTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 
 
-const createPhotoElement = (photosArray) => {
-  let photoElement = randomPhotoTemplate.cloneNode(true);
+const createPhotoElement = (photo) => {
+  let photoElement = photoTemplate.cloneNode(true);
 
-  photoElement.querySelector('.picture__img').src = photosArray.url;
-  photoElement.querySelector('.picture__likes').textContent = photosArray.likes;
-  photoElement.querySelector('.picture__comments').textContent = photosArray.comments.length;
+  photoElement.querySelector('.picture__img').src = photo.url;
+  photoElement.querySelector('.picture__likes').textContent = photo.likes;
+  photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
 
   return photoElement;
 };
 
-const drawPhotos = (photosArray) => {
+const drawPhotos = (photos) => {
   let photosFragment = document.createDocumentFragment();
 
-  photosArray.forEach((value, i) => {
-    photosFragment = createPhotoElement(photosArray[i]);
+  photos.forEach((currentValue) => {
+    photosFragment = createPhotoElement(currentValue);
     pictures.appendChild(photosFragment);
   });
 };
 
-export {drawPhotos, photos};
+export {drawPhotos};
