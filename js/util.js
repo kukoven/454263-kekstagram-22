@@ -16,4 +16,8 @@ const getMaxStringWidth = (string, maxWidth) => {
 
 getMaxStringWidth('Функция для проверки максимальной длины строки', 140);
 
-export {getInteger};
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+export {getInteger, isEscEvent};
