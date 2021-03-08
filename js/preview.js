@@ -12,15 +12,27 @@ const closePreview = () => {
   bodyElement.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onPreviewEscDown);
-}
+};
 
-const openPreview = () => {
+const fillPreview = (photo) => {
+  preview.querySelector('img').src = photo.url;
+  preview.querySelector('.likes-count').textContent = photo.likes;
+  preview.querySelector('.comments-count').textContent = photo.comments.length;
+  preview.querySelector('.social__caption').textContent = photo.description;
+
+  drawComments(photo.comments);
+};
+
+const openPreview = (photo) => {
+  fillPreview(photo);
+
   preview.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   commentLoaderButton.classList.add('hidden');
-  bodyElement.classList.add('modal-open');
 
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onPreviewEscDown);
+
   previewCloseButton.addEventListener('click', closePreview);
 };
 
@@ -56,31 +68,17 @@ const createComment = (comments) => {
 const drawComments = (comments) => {
   clearComments();
 
-  let commentsFragment = document.createDocumentFragment();
-  comments.forEach((currentValue, index) => {
-    commentsFragment = createComment(comments[index]);
-    commentsList.appendChild(commentsFragment);
+  const commentsFragment = document.createDocumentFragment();
+
+  comments.forEach((_, index) => {
+    commentsFragment.appendChild(createComment(comments[index]));
   });
+
+  commentsList.appendChild(commentsFragment);
 };
 
-const fillPreview = (photo) => {
-  preview.querySelector('img').src = photo.url;
-  preview.querySelector('.likes-count').textContent = photo.likes;
-  preview.querySelector('.comments-count').textContent = photo.comments.length;
-  preview.querySelector('.social__caption').textContent = photo.description;
-};
-
-const showPreview = (photos) => {
-  const photosElement = document.querySelectorAll('.picture');
-
-  photosElement.forEach((currentValue, index) => {
-    currentValue.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      openPreview();
-      fillPreview(photos[index]);
-      drawComments(photos[index].comments);
-    });
-  });
+const showPreview = (photo) => {
+  openPreview(photo);
 };
 
 export {showPreview};
