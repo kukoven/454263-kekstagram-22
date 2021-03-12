@@ -1,6 +1,7 @@
 import {isEscEvent} from './util.js';
 import {changeScale} from './scale.js';
 import {changeEffect} from './effects.js';
+import {formValidation} from './validation-form.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImgInput = uploadForm.querySelector('.img-upload__input');
@@ -15,6 +16,7 @@ const openUpload = () => {
 
   changeScale();
   changeEffect();
+  formValidation();
 };
 
 const closeUpload = () => {
@@ -36,4 +38,4 @@ const showUploadImg = () => {
   uploadCloseButton.addEventListener('click', closeUpload);
 };
 
-export {showUploadImg};
+export {showUploadImg, onUploadEscDown};
