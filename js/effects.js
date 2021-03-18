@@ -1,8 +1,11 @@
 /* global noUiSlider:readonly */
+import {resetScale} from './scale.js';
+
 const effects = document.querySelector('.effects');
 const uploadPreviewImg = document.querySelector('.img-upload__preview > img')
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
+const DEFAULT_CLASS = 'effects__preview--none';
 let currentClass = 'effects__preview--none';
 const effectsMap = {
   none: 'effects__preview--none',
@@ -23,6 +26,12 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
+const resetEffectValue = () => {
+  slider.style.display = 'none';
+  uploadPreviewImg.style.filter = '';
+  uploadPreviewImg.classList.remove(currentClass);
+  uploadPreviewImg.classList.add(DEFAULT_CLASS);
+};
 
 const changeEffectValue = () => {
   switch (currentClass) {
@@ -119,12 +128,14 @@ const changeEffectValue = () => {
 };
 
 const changeEffect = () => {
-  uploadPreviewImg.classList.add(currentClass);
+  uploadPreviewImg.classList.add(DEFAULT_CLASS);
   slider.style.display = 'none';
 
   effects.addEventListener('click', (evt) => {
 
     if (evt.target.matches('.effects__radio')) {
+      resetScale();
+
       uploadPreviewImg.classList.remove(currentClass);
       currentClass = 'effects__preview--' + evt.target.value;
       uploadPreviewImg.classList.add(currentClass);
@@ -135,4 +146,4 @@ const changeEffect = () => {
   });
 };
 
-export {changeEffect};
+export {changeEffect, resetEffectValue};

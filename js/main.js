@@ -1,11 +1,9 @@
-import {createPhotos} from './data.js';
 import {drawPhotos} from './photo.js';
-import {showUploadImg} from './upload-file.js';
+import {closeUpload, showUploadImg} from './upload-file.js';
+import {getData} from './backend.js';
+import {errorAlert} from './util.js';
+import {setUploadFormSubmit} from './validation-form.js';
 
-const photos = createPhotos();
-
-drawPhotos(photos);
+getData(drawPhotos, errorAlert);
 showUploadImg();
-
-
-
+setUploadFormSubmit(closeUpload);
