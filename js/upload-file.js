@@ -1,12 +1,11 @@
 import {isEscEvent} from './util.js';
 import {changeScale} from './scale.js';
 import {changeEffect} from './effects.js';
-import {formValidation} from './validation-form.js';
+import {clearForm, formValidation} from './validation-form.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadImgInput = uploadForm.querySelector('.img-upload__input');
-const uploadImg = uploadForm.querySelector('.img-upload__overlay');
-const uploadCloseButton = uploadForm.querySelector('.img-upload__cancel');
+const uploadImgInput = document.querySelector('.img-upload__input');
+const uploadImg = document.querySelector('.img-upload__overlay');
+const uploadCloseButton = document.querySelector('.img-upload__cancel');
 const bodyElement = document.body;
 
 const openUpload = () => {
@@ -23,8 +22,8 @@ const closeUpload = () => {
   uploadImg.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
 
-  uploadImgInput.value = '';
-  document.removeEventListener('keydown', (onUploadEscDown));
+  clearForm();
+  document.removeEventListener('keydown', onUploadEscDown);
 };
 
 const onUploadEscDown = (evt) => {
@@ -38,4 +37,4 @@ const showUploadImg = () => {
   uploadCloseButton.addEventListener('click', closeUpload);
 };
 
-export {showUploadImg, onUploadEscDown};
+export {showUploadImg, onUploadEscDown, closeUpload};

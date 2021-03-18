@@ -9,6 +9,12 @@ const DEFAULT_SCALE_VALUE = '100%';
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 
+const resetScale = () => {
+  uploadScaleInput.value = DEFAULT_SCALE_VALUE;
+  uploadPreview.style.transform = 'scale(1)';
+  uploadScaleBigger.disabled = true;
+};
+
 const trimLastLetter = (string) => {
   return string.slice(0, string.length - 1);
 };
@@ -42,7 +48,7 @@ const changeScale = () => {
   uploadScaleBigger.disabled = true;
 
   uploadScaleBigger.addEventListener('click', increaseScale);
-  uploadScaleSmaller.addEventListener('click', decreaseScale)
+  uploadScaleSmaller.addEventListener('click', decreaseScale);
 };
 
-export {changeScale};
+export {changeScale, resetScale};
