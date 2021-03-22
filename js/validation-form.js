@@ -1,18 +1,11 @@
 import {onUploadEscDown} from './upload-file.js';
 import {sendData} from './backend.js';
 import {isEscEvent} from './util.js';
-import {resetScale} from './scale.js';
-import {resetEffectValue} from './effects.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentText = uploadForm.querySelector('.text__description');
-const imageUploadInput = uploadForm.querySelector('.img-upload__input');
 const regLettersAndNumbers = /^[а-яА-ЯёЁa-zA-Z0-9]+$/;
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-const successMessage = successTemplate.cloneNode(true);
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -102,15 +95,6 @@ const commentValidation = () => {
   });
 };
 
-const clearForm = () => {
-  uploadForm.reset();
-  resetScale();
-  resetEffectValue();
-  commentText.value = '';
-  hashtagInput.value = '';
-  imageUploadInput.value = '';
-};
-
 const formValidation = () => {
   hashtagsValidation();
   commentValidation();
@@ -121,30 +105,6 @@ const formValidation = () => {
 
   uploadForm.addEventListener('input', (evt) => {
     evt.target.style.border = '';
-  });
-};
-
-const closeSuccessPostMessage = () => {
-  successMessage.remove();
-
-  document.removeEventListener('keydown', onSuccessPostMessageEsc);
-}
-
-const onSuccessPostMessageEsc = (evt) => {
-  if (isEscEvent(evt)) {
-    closeSuccessPostMessage();
-  }
-};
-
-const SuccessPostMessage = () => {
-  document.querySelector('main').appendChild(successMessage);
-
-  document.addEventListener('keydown', onSuccessPostMessageEsc);
-  document.querySelector('.success__button').addEventListener('click', closeSuccessPostMessage);
-  document.addEventListener('click', (evt) => {
-    if (evt.target.matches('.success')) {
-      closeSuccessPostMessage();
-    }
   });
 };
 
@@ -177,8 +137,8 @@ const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    sendData(onSuccess, errorPostMessage, new FormData(evt.target), SuccessPostMessage, clearForm);
+    sendData(onSuccess, errorPostMessage, new FormData(evt.target));
   });
 };
 
-export {formValidation, setUploadFormSubmit, clearForm};
+export {formValidation, setUploadFormSubmit};

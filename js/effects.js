@@ -50,11 +50,6 @@ const changeEffectValue = () => {
         start: 1,
         step: 0.1,
       });
-
-      slider.noUiSlider.on('update', (value, handle) => {
-        sliderValue.value = value[handle];
-        uploadPreviewImg.style.filter = `grayscale(${sliderValue.value})`;
-      });
       break;
 
     case effectsMap.sepia:
@@ -66,11 +61,6 @@ const changeEffectValue = () => {
         },
         start: 1,
         step: 0.1,
-      });
-
-      slider.noUiSlider.on('update', (value, handle) => {
-        sliderValue.value = value[handle];
-        uploadPreviewImg.style.filter = `sepia(${sliderValue.value})`;
       });
       break;
 
@@ -84,11 +74,6 @@ const changeEffectValue = () => {
         start: 100,
         step: 1,
       });
-
-      slider.noUiSlider.on('update', (value, handle) => {
-        sliderValue.value = value[handle];
-        uploadPreviewImg.style.filter = `invert(${sliderValue.value}%)`;
-      });
       break;
 
     case effectsMap.phobos:
@@ -101,11 +86,6 @@ const changeEffectValue = () => {
         start: 3,
         step: 0.1,
       });
-
-      slider.noUiSlider.on('update', (value, handle) => {
-        sliderValue.value = value[handle];
-        uploadPreviewImg.style.filter = `blur(${sliderValue.value}px)`;
-      });
       break;
 
     case effectsMap.heat:
@@ -117,11 +97,6 @@ const changeEffectValue = () => {
         },
         start: 3,
         step: 0.1,
-      });
-
-      slider.noUiSlider.on('update', (value, handle) => {
-        sliderValue.value = value[handle];
-        uploadPreviewImg.style.filter = `brightness(${sliderValue.value})`;
       });
       break;
   }
@@ -142,6 +117,19 @@ const changeEffect = () => {
 
       changeEffectValue();
     }
+
+    slider.noUiSlider.on('update', (value, handle) => {
+      const effectsValue = {
+        'effects__preview--chrome': `grayscale(${sliderValue.value})`,
+        'effects__preview--sepia': `sepia(${sliderValue.value})`,
+        'effects__preview--marvin': `invert(${sliderValue.value}%)`,
+        'effects__preview--phobos': `blur(${sliderValue.value}px)`,
+        'effects__preview--heat': `brightness(${sliderValue.value})`,
+      };
+
+      sliderValue.value = value[handle];
+      uploadPreviewImg.style.filter = effectsValue[currentClass];
+    });
 
   });
 };

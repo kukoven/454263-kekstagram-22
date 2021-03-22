@@ -1,9 +1,12 @@
 import {drawPhotos} from './photo.js';
-import {closeUpload, showUploadImg} from './upload-file.js';
+import {showUploadImg, successPostMessage} from './upload-file.js';
 import {getData} from './backend.js';
 import {errorAlert} from './util.js';
 import {setUploadFormSubmit} from './validation-form.js';
+import {showFilteredPhotos} from './filter.js';
 
-getData(drawPhotos, errorAlert);
+getData((photos) => {
+  drawPhotos(photos);
+  showFilteredPhotos(photos);}, errorAlert);
 showUploadImg();
-setUploadFormSubmit(closeUpload);
+setUploadFormSubmit(successPostMessage);

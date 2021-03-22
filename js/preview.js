@@ -43,10 +43,6 @@ const onPreviewEscDown = (evt) => {
   }
 };
 
-const clearComments = () => {
-  preview.querySelector('.social__comments').innerHTML = '';
-};
-
 const createComment = (comments) => {
   const commentItem = document.createElement('li');
   const commentPicture = document.createElement('img');
@@ -66,8 +62,6 @@ const createComment = (comments) => {
 };
 
 const drawComments = (comments) => {
-  clearComments();
-
   const commentsFragment = document.createDocumentFragment();
 
   comments.forEach((_, index) => {
