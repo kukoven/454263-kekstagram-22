@@ -1,12 +1,19 @@
 import {isEscEvent} from './util.js';
-import {changeScale} from './scale.js';
-import {changeEffect} from './effects.js';
-import {clearForm, formValidation} from './validation-form.js';
+import {changeScale, resetScale} from './scale.js';
+import {changeEffect, resetEffectValue} from './effects.js';
+import {formValidation} from './validation-form.js';
 
-const uploadImgInput = document.querySelector('.img-upload__input');
-const uploadImg = document.querySelector('.img-upload__overlay');
-const uploadCloseButton = document.querySelector('.img-upload__cancel');
+const uploadForm =document.querySelector('.img-upload__form')
+const uploadImgInput = uploadForm.querySelector('.img-upload__input');
+const uploadImg = uploadForm.querySelector('.img-upload__overlay');
+const uploadCloseButton = uploadForm.querySelector('.img-upload__cancel');
+const commentText = uploadForm.querySelector('.text__description');
+const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const bodyElement = document.body;
+const successTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const successMessage = successTemplate.cloneNode(true);
 
 const openUpload = () => {
   uploadImg.classList.remove('hidden');
@@ -37,4 +44,41 @@ const showUploadImg = () => {
   uploadCloseButton.addEventListener('click', closeUpload);
 };
 
-export {showUploadImg, onUploadEscDown, closeUpload};
+const clearForm = () => {
+  uploadForm.reset();
+  resetScale();
+  resetEffectValue();
+  commentText.value = '';
+  hashtagInput.value = '';
+  uploadImgInput.value = '';
+};
+
+const closeSuccessPostMessage = () => {
+  successMessage.remove();
+  clearForm();
+  uploadImg.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onSuccessPostMessageEsc);
+}
+
+const onSuccessPostMessageEsc = (evt) => {
+  if (isEscEvent(evt)) {
+    closeSuccessPostMessage();
+  }
+};
+
+const successPostMessage = () => {
+  document.querySelector('main').appendChild(successMessage);
+  successMessage.style.zIndex = '2';
+
+  document.addEventListener('keydown', onSuccessPostMessageEsc);
+  document.querySelector('.success__button').addEventListener('click', closeSuccessPostMessage);
+  document.addEventListener('click', (evt) => {
+    if (evt.target.matches('.success')) {
+      closeSuccessPostMessage();
+    }
+  });
+};
+
+export {showUploadImg, onUploadEscDown, closeUpload, successPostMessage};

@@ -5,7 +5,6 @@ const photoTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 
-
 const createPhotoElement = (photo) => {
   const photoElement = photoTemplate.cloneNode(true);
 
@@ -28,6 +27,7 @@ const drawPhotos = (photos) => {
   });
 
   pictures.appendChild(photosFragment);
+
 };
 
 export {drawPhotos};

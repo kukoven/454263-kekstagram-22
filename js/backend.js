@@ -15,9 +15,9 @@ const getData = (onSuccess, onFailed) => {
     });
 };
 
-const sendData = (onSuccess, onFailed, body, successMassage, clear) => {
+const sendData = (onSuccess, onFailed, body) => {
   fetch(
-    'https://22.javascript.pages.academy/kekstagra',
+    'https://22.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
       body: body,
@@ -25,8 +25,6 @@ const sendData = (onSuccess, onFailed, body, successMassage, clear) => {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-        successMassage();
-        clear();
       } else {
         throw new Error('Не получилось отправить данные');
       }

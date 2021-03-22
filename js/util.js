@@ -1,3 +1,6 @@
+const ALERT_SHOW_TIME = 2000;
+let lastTimeout = null;
+
 // Функция возвращающая целое число [min, max]
 
 const getInteger = (min, max) => {
@@ -7,6 +10,8 @@ const getInteger = (min, max) => {
 
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+getInteger(0, 1);
 
 // Функция для проверки максимальной длины строки
 
@@ -21,14 +26,13 @@ const isEscEvent = (evt) => {
 };
 
 const errorAlert = (message) => {
-  const ALERT_SHOW_TIME = 2000;
   const alertContainer = document.createElement('div');
 
-  alertContainer.style.zIndex = 100;
+  alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
 
   alertContainer.style.display = 'flex';
   alertContainer.style.justifyContent = 'center';
@@ -48,4 +52,11 @@ const errorAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getInteger, isEscEvent, errorAlert};
+const debounce = (cb, debounceInterval) => {
+  if (lastTimeout) {
+    clearTimeout(lastTimeout);
+  }
+  lastTimeout = setTimeout(cb, debounceInterval);
+};
+
+export {getInteger, isEscEvent, errorAlert, debounce};
