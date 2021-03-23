@@ -1,7 +1,7 @@
 import {drawPhotos} from './photo.js';
 import {getInteger, debounce} from './util.js';
 
-const DEBOUNCE = 500;
+const DEBOUNCE_INTERVAL = 500;
 const RANDOM_PHOTO_QUANTITY = 10;
 const filters = document.querySelector('.img-filters');
 const filterForm = filters.querySelector('.img-filters__form');
@@ -13,14 +13,6 @@ const removeActiveClass = () => {
   });
 };
 
-const clearPhotoGallery = () => {
-  const picture = document.querySelectorAll('.picture');
-
-  picture.forEach((currentValue) => {
-    currentValue.remove();
-  });
-};
-
 const sortByComments = (photos) => {
   return photos.slice().sort((a, b) => {
     return b.comments.length - a.comments.length;
@@ -28,17 +20,15 @@ const sortByComments = (photos) => {
 };
 
 const sortRandom = (photos) => {
-  const photoArray = photos.slice();
-  const randomPhotoArray = [];
+  const photosTemporary = photos.slice();
 
-  for (let i = 0; i < RANDOM_PHOTO_QUANTITY; i++) {
-    const photoRandomIndex = getInteger(0, photoArray.length - 1);
+  for (let i = photosTemporary.length - 1; i > 0; i--) {
+    let j = getInteger(0, i);
 
-    randomPhotoArray.push(photoArray[photoRandomIndex]);
-    photoArray.splice(photoRandomIndex, 1);
+    [photosTemporary[i], photosTemporary[j]] = [photosTemporary[j], photosTemporary[i]];
   }
 
-  return randomPhotoArray;
+  return photosTemporary.slice(0, RANDOM_PHOTO_QUANTITY);
 };
 
 const showFilteredPhotos = (photos) => {
@@ -48,18 +38,18 @@ const showFilteredPhotos = (photos) => {
     removeActiveClass();
 
     evt.target.classList.add('img-filters__button--active');
-    clearPhotoGallery();
 
     if (evt.target.id === 'filter-discussed') {
       const discussedPhoto = sortByComments(photos);
-      debounce(() => drawPhotos(discussedPhoto), DEBOUNCE);
+      debounce(() => drawPhotos(discussedPhoto), DEBOUNCE_INTERVAL);
     } else if (evt.target.id === 'filter-random') {
       const randomPhoto = sortRandom(photos);
-      debounce(() => drawPhotos(randomPhoto), DEBOUNCE);
+      debounce(() => drawPhotos(randomPhoto), DEBOUNCE_INTERVAL);
     } else {
-      debounce(() => drawPhotos(photos), DEBOUNCE);
+      debounce(() => drawPhotos(photos), DEBOUNCE_INTERVAL);
     }
   });
+
 };
 
 export {showFilteredPhotos};
