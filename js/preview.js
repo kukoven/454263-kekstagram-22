@@ -7,7 +7,8 @@ const previewCloseButton = preview.querySelector('.big-picture__cancel');
 const commentsCount = preview.querySelector('.social__comment-count');
 const commentLoaderButton = preview.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
-let commentsShowed = null;
+let commentsShowed = 0;
+let onButtonLoaderClick = null;
 
 const commentsFragment = document.createDocumentFragment();
 const closePreview = () => {
@@ -16,7 +17,8 @@ const closePreview = () => {
   document.removeEventListener('keydown', onPreviewEscDown);
   clearComments();
   commentLoaderButton.classList.remove('hidden');
-  commentsShowed = null;
+  commentLoaderButton.removeEventListener('click', onButtonLoaderClick);
+  commentsShowed = 0;
 };
 const fillPreview = (photo) => {
   preview.querySelector('img').src = photo.url;
@@ -73,7 +75,7 @@ const showAnotherComments = (commentsLength, comments) => {
 
   for (let i = commentsShowed; i < commentsShowed + COMMENTS_MAX_LENGTH; i++) {
 
-    if (comments[i] === undefined) {
+    if (i > comments.length - 1) {
       commentLoaderButton.classList.add('hidden');
 
       break;
@@ -101,10 +103,12 @@ const drawComments = (comments) => {
     commentLoaderButton.classList.add('hidden');
   }
 
-  commentLoaderButton.addEventListener('click', () => {
+  onButtonLoaderClick = () => {
     showAnotherComments(commentsLength, comments);
-  });
+  };
+  commentLoaderButton.addEventListener('click', onButtonLoaderClick);
 };
+
 
 const showPreview = (photo) => {
   openPreview(photo);
