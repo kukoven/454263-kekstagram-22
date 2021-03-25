@@ -5,6 +5,14 @@ const photoTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 
+const clearPhotoGallery = () => {
+  const picture = document.querySelectorAll('.picture');
+
+  picture.forEach((currentValue) => {
+    currentValue.remove();
+  });
+};
+
 const createPhotoElement = (photo) => {
   const photoElement = photoTemplate.cloneNode(true);
 
@@ -20,6 +28,8 @@ const createPhotoElement = (photo) => {
 };
 
 const drawPhotos = (photos) => {
+  clearPhotoGallery();
+
   const photosFragment = document.createDocumentFragment();
 
   photos.forEach((currentValue) => {
@@ -27,7 +37,6 @@ const drawPhotos = (photos) => {
   });
 
   pictures.appendChild(photosFragment);
-
 };
 
 export {drawPhotos};
