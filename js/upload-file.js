@@ -3,8 +3,10 @@ import {changeScale, resetScale} from './scale.js';
 import {changeEffect, resetEffectValue} from './effects.js';
 import {formValidation} from './validation-form.js';
 
+const FILE_TYPES = ['gif', 'png', 'jpeg', 'jpg'];
 const uploadForm =document.querySelector('.img-upload__form')
 const uploadImgInput = uploadForm.querySelector('.img-upload__input');
+const uploadImgPreview = uploadForm.querySelector('.img-upload__preview > img');
 const uploadImg = uploadForm.querySelector('.img-upload__overlay');
 const uploadCloseButton = uploadForm.querySelector('.img-upload__cancel');
 const commentText = uploadForm.querySelector('.text__description');
@@ -80,5 +82,24 @@ const successPostMessage = () => {
     }
   });
 };
+
+uploadImgInput.addEventListener('change', () => {
+  const file = uploadImgInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((currentValue) => {
+    return fileName.endsWith(currentValue);
+  });
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      uploadImgPreview.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  }
+});
 
 export {showUploadImg, onUploadEscDown, closeUpload, successPostMessage};
