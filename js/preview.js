@@ -36,7 +36,9 @@ const openPreview = (photo) => {
   bodyElement.classList.add('modal-open');
 
   document.addEventListener('keydown', onPreviewEscDown);
-  previewCloseButton.addEventListener('click', closePreview);
+  previewCloseButton.addEventListener('click', () => {
+    closePreview();
+  });
 
 };
 const onPreviewEscDown = (evt) => {

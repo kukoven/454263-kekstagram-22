@@ -1,11 +1,12 @@
 /* global noUiSlider:readonly */
 import {resetScale} from './scale.js';
 
-const effects = document.querySelector('.effects');
+const DEFAULT_CLASS = 'effects__preview--none';
+
+const effect = document.querySelector('.effects');
 const uploadPreviewImg = document.querySelector('.img-upload__preview > img')
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
-const DEFAULT_CLASS = 'effects__preview--none';
 let currentClass = 'effects__preview--none';
 const effectsMap = {
   none: 'effects__preview--none',
@@ -106,7 +107,7 @@ const changeEffect = () => {
   uploadPreviewImg.classList.add(DEFAULT_CLASS);
   slider.style.display = 'none';
 
-  effects.addEventListener('click', (evt) => {
+  effect.addEventListener('click', (evt) => {
 
     if (evt.target.matches('.effects__radio')) {
       resetScale();

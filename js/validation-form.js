@@ -2,15 +2,6 @@ import {onUploadEscDown} from './upload-file.js';
 import {sendData} from './backend.js';
 import {isEscEvent} from './util.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const commentText = uploadForm.querySelector('.text__description');
-const regLettersAndNumbers = /^[а-яА-ЯёЁa-zA-Z0-9]+$/;
-const errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-const errorMessage = errorTemplate.cloneNode(true);
-
 const INDEX_OF_FIRST_SYMBOL = 0;
 const INDEX_OF_SECOND_SYMBOL = 1;
 const MIN_HASHTAG_SYMBOL = 2;
@@ -19,17 +10,27 @@ const HASHTAGS_AMOUNT = 5;
 const COMMENT_AMOUNT = 140;
 const BORDER_ERROR_STYLE = '4px solid red';
 
+const uploadForm = document.querySelector('.img-upload__form');
+const hashtagInput = uploadForm.querySelector('.text__hashtags');
+const commentText = uploadForm.querySelector('.text__description');
+const regLettersAndNumbers = /^[а-яА-ЯёЁa-zA-Z0-9]+$/;
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+
+const errorMessage = errorTemplate.cloneNode(true);
+
 const isExistSameHashtag = (hashtags) => {
-  const uniqueHashTag = [];
+  const uniqueHashTags = [];
 
   for (let i = 0; i < hashtags.length; i++) {
     const hashtag = hashtags[i];
 
-    if (uniqueHashTag.includes(hashtag)) {
+    if (uniqueHashTags.includes(hashtag)) {
       return true;
     }
 
-    uniqueHashTag.push(hashtag);
+    uniqueHashTags.push(hashtag);
   }
 
   return false;
@@ -60,7 +61,7 @@ const onHashtagInput = () => {
   hashtagInput.reportValidity();
 }
 
-const hashtagsValidation = () => {
+const validateHashtags = () => {
   hashtagInput.addEventListener('input', onHashtagInput);
 
   hashtagInput.addEventListener('blur', () => {
@@ -96,7 +97,7 @@ const commentValidation = () => {
 };
 
 const formValidation = () => {
-  hashtagsValidation();
+  validateHashtags();
   commentValidation();
 
   uploadForm.addEventListener('invalid', (evt) => {
@@ -120,7 +121,7 @@ const onErrorPostMessageEsc = (evt) => {
   }
 };
 
-const errorPostMessage = () => {
+const showErrorPostMessage = () => {
   document.querySelector('main').appendChild(errorMessage);
   errorMessage.style.zIndex = '2';
 
@@ -137,7 +138,7 @@ const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    sendData(onSuccess, errorPostMessage, new FormData(evt.target));
+    sendData(onSuccess, showErrorPostMessage, new FormData(evt.target));
   });
 };
 

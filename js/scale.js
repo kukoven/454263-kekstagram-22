@@ -1,13 +1,14 @@
-const uploadScaleImg = document.querySelector('.img-upload__scale');
-const uploadScaleSmaller = uploadScaleImg.querySelector('.scale__control--smaller');
-const uploadScaleBigger = uploadScaleImg.querySelector('.scale__control--bigger');
-const uploadScaleInput = uploadScaleImg.querySelector('.scale__control--value');
-const uploadPreview = document.querySelector('.img-upload__preview');
-
 const STEP = 25;
 const DEFAULT_SCALE_VALUE = '100%';
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
+
+const uploadScaleImg = document.querySelector('.img-upload__scale');
+const uploadScaleSmaller = uploadScaleImg.querySelector('.scale__control--smaller');
+const uploadScaleBigger = uploadScaleImg.querySelector('.scale__control--bigger');
+const uploadScaleInput = uploadScaleImg.querySelector('.scale__control--value');
+
+const uploadPreview = document.querySelector('.img-upload__preview');
 
 const resetScale = () => {
   uploadScaleInput.value = DEFAULT_SCALE_VALUE;

@@ -25,7 +25,7 @@ const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
 };
 
-const errorAlert = (message) => {
+const showErrorAlert = (message) => {
   const alertContainer = document.createElement('div');
 
   alertContainer.style.zIndex = '100';
@@ -59,4 +59,4 @@ const debounce = (cb, debounceInterval) => {
   lastTimeout = setTimeout(cb, debounceInterval);
 };
 
-export {getInteger, isEscEvent, errorAlert, debounce};
+export {getInteger, isEscEvent, showErrorAlert, debounce};

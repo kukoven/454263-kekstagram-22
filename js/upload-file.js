@@ -42,8 +42,12 @@ const onUploadEscDown = (evt) => {
 };
 
 const showUploadImg = () => {
-  uploadImgInput.addEventListener('change', openUpload);
-  uploadCloseButton.addEventListener('click', closeUpload);
+  uploadImgInput.addEventListener('change', () => {
+    openUpload();
+  });
+  uploadCloseButton.addEventListener('click', () => {
+    closeUpload();
+  });
 };
 
 const clearForm = () => {
@@ -70,7 +74,7 @@ const onSuccessPostMessageEsc = (evt) => {
   }
 };
 
-const successPostMessage = () => {
+const showSuccessPostMessage = () => {
   document.querySelector('main').appendChild(successMessage);
   successMessage.style.zIndex = '2';
 
@@ -102,4 +106,4 @@ uploadImgInput.addEventListener('change', () => {
   }
 });
 
-export {showUploadImg, onUploadEscDown, closeUpload, successPostMessage};
+export {showUploadImg, onUploadEscDown, closeUpload, showSuccessPostMessage};
